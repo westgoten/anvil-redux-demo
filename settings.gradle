@@ -1,1 +1,1 @@
-include ':app', ':redukt_core', ':redukt_ui'
+include ':app'

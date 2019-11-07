@@ -3,14 +3,13 @@ package com.westgoten.anvilreduxdemo.ui.views
 import android.content.Context
 import android.widget.LinearLayout
 import android.graphics.Color
-import com.github.raulccabreu.redukt.Redukt
-import com.github.raulccabreu.redukt.ui.ReactiveView
-import com.westgoten.anvilreduxdemo.Store
+import com.westgoten.anvilreduxdemo.actions.CounterActionCreator
 import com.westgoten.anvilreduxdemo.models.AppState
 
 import trikita.anvil.DSL.*
+import trikita.anvil.RenderableView
 
-class CounterView(context: Context) : ReactiveView<AppState>(context) {
+class CounterView(context: Context) : RenderableView(context), SimpleStateListener<AppState> {
     private var count = 0
 
     override fun view() {
@@ -25,7 +24,7 @@ class CounterView(context: Context) : ReactiveView<AppState>(context) {
                 text("+")
                 margin(0, 0, 0, dip(8))
                 onClick {
-                    count++ // TODO: Use Action
+                    CounterActionCreator.increment()
                 }
             }
 
@@ -41,13 +40,11 @@ class CounterView(context: Context) : ReactiveView<AppState>(context) {
                 text("-")
                 margin(0, 0, 0, dip(8))
                 onClick {
-                    count-- // TODO: Use Action
+                    CounterActionCreator.decrement()
                 }
             }
         }
     }
-
-    override fun getRedukt(): Redukt<AppState> = Store.redukt
 
     override fun onChanged(state: AppState) {
         count = state.count
